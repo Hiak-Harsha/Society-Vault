@@ -1,0 +1,215 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id         String   @id @default(uuid())
+  name       String
+  code       String   @unique
+  logo       String?
+  adminEmail String
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  policy        OrgPolicy?
+  payGradeTiers PayGradeTier[]
+  members       Member[]
+  contributions Contribution[]
+  loans         LoanApplication[]
+  fundSummary   FundSummary?
+  auditLogs     AuditLog[]
+  transactions  Transaction[]
+}
+
+model OrgPolicy {
+  id                  String   @id @default(uuid())
+  orgId               String   @unique
+  interestModel       String   @default("NONE") // NONE, FLAT, REDUCING
+  interestRate        Float    @default(0)
+  maxLoanAmount       Float    @default(100000)
+  loanMultiplierCap   Float    @default(3) // e.g., 3x contribution
+  maxTenureMonths     Int      @default(24)
+  minWitnesses        Int      @default(3)
+  minWitnessApprovals Int      @default(2)
+  approvalMode        String   @default("ADMIN_ONLY") // ADMIN_ONLY, ADMIN_AND_WITNESSES, COMMITTEE
+  repaymentMode       String   @default("MANUAL") // MANUAL, AUTO_DEDUCT, EMI_SCHEDULE
+  coolingPeriodDays   Int      @default(30)
+  maxConcurrentLoans  Int      @default(1)
+  ipWhitelist         String   @default("") // Comma-separated permitted IP blocks
+  directoryType       String   @default("NONE") // NONE, LDAP, REST_API, SQL_DB
+  directoryEndpoint   String?
+  directoryApiKey     String?
+  directoryMapping    String?  // JSON string representing mapping rules
+  ledgerVerifiedAt    DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  organization Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+}
+
+model PayGradeTier {
+  id                  String  @id @default(uuid())
+  orgId               String
+  gradeName           String
+  level               Int
+  monthlyContribution Float
+  description         String?
+
+  organization Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  members      Member[]
+
+  @@unique([orgId, level])
+}
+
+model Member {
+  id               String   @id @default(uuid())
+  orgId            String
+  employeeId       String
+  name             String
+  email            String   @unique
+  passwordHash     String
+  role             String   @default("MEMBER") // SUPER_ADMIN, ADMIN, TREASURER, MEMBER
+  payGradeId       String?
+  rank             String?
+  totalContributed Float    @default(0)
+  isActive            Boolean  @default(true)
+  bankAccountNumber   String?  // AES-256-GCM encrypted bank account number
+  autoDeductEnabled   Boolean  @default(false)
+  joinedAt            DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  organization   Organization      @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  payGrade       PayGradeTier?     @relation(fields: [payGradeId], references: [id])
+  contributions  Contribution[]
+  loans          LoanApplication[] @relation("Applicant")
+  witnessedLoans LoanWitness[]
+  auditLogs      AuditLog[]
+  transactions   Transaction[]
+
+  @@unique([orgId, employeeId])
+}
+
+model Contribution {
+  id              String    @id @default(uuid())
+  memberId        String
+  orgId           String
+  amount          Float
+  month           String // Format: "2024-01"
+  status          String    @default("PENDING") // PENDING, CONFIRMED, REJECTED
+  confirmedBy     String?
+  paidAt          DateTime  @default(now())
+  confirmedAt     DateTime?
+  paymentMethod   String? // UPI, BANK_TRANSFER, CARDS, NET_BANKING
+  referenceNumber String? // transaction reference ID
+
+  member       Member       @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@unique([memberId, month])
+}
+
+model LoanApplication {
+  id              String    @id @default(uuid())
+  applicantId     String
+  orgId           String
+  amount          Float
+  purpose         String
+  category        String    @default("PERSONAL") // EMERGENCY, EDUCATION, MEDICAL, HOUSING, PERSONAL, OTHER
+  tenureMonths    Int
+  interestRate    Float     @default(0)
+  status          String    @default("DRAFT") // DRAFT, PENDING_WITNESSES, PENDING_APPROVAL, APPROVED, DISBURSED, REPAYING, CLOSED, REJECTED
+  approvedBy      String?
+  rejectionReason String?
+  appliedAt       DateTime  @default(now())
+  approvedAt      DateTime?
+  disbursedAt     DateTime?
+  updatedAt       DateTime  @updatedAt
+
+  applicant    Member         @relation("Applicant", fields: [applicantId], references: [id], onDelete: Cascade)
+  organization Organization   @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  witnesses    LoanWitness[]
+  repayments   Repayment[]
+}
+
+model LoanWitness {
+  id         String    @id @default(uuid())
+  loanId     String
+  witnessId  String
+  status     String    @default("REQUESTED") // REQUESTED, ACCEPTED, DECLINED
+  remarks    String?
+  respondedAt DateTime?
+
+  loan    LoanApplication @relation(fields: [loanId], references: [id], onDelete: Cascade)
+  witness Member          @relation(fields: [witnessId], references: [id], onDelete: Cascade)
+
+  @@unique([loanId, witnessId])
+}
+
+model Repayment {
+  id               String    @id @default(uuid())
+  loanId           String
+  amount           Float
+  principalPortion Float
+  interestPortion  Float     @default(0)
+  month            String
+  status           String    @default("PENDING") // PENDING, CONFIRMED
+  confirmedBy      String?
+  paidAt           DateTime  @default(now())
+  confirmedAt      DateTime?
+  paymentMethod    String? // UPI, BANK_TRANSFER, CARDS, NET_BANKING
+  referenceNumber  String? // transaction reference ID
+
+  loan LoanApplication @relation(fields: [loanId], references: [id], onDelete: Cascade)
+}
+
+model FundSummary {
+  id               String   @id @default(uuid())
+  orgId            String   @unique
+  totalPool        Float    @default(0)
+  totalDisbursed   Float    @default(0)
+  totalRepaid      Float    @default(0)
+  availableBalance Float    @default(0)
+  activeLoans      Int      @default(0)
+  lastUpdated      DateTime @updatedAt
+
+  organization Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+}
+
+model AuditLog {
+  id            String   @id @default(uuid())
+  orgId         String
+  actorId       String?
+  action        String // LOGIN, CONTRIBUTION, LOAN_APPLY, LOAN_WITNESS, LOAN_APPROVE, LOAN_REJECT, LOAN_DISBURSE, REPAYMENT, SETTINGS_CHANGE, MEMBER_ADD, MEMBER_DEACTIVATE
+  entityType    String? // Member, Loan, Contribution, etc.
+  entityId      String?
+  previousState String? // JSON string
+  newState      String? // JSON string
+  ipAddress     String?
+  timestamp     DateTime @default(now())
+
+  organization Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  actor        Member?      @relation(fields: [actorId], references: [id])
+}
+
+model Transaction {
+  id              String   @id @default(uuid())
+  orgId           String
+  memberId        String?
+  type            String // DEPOSIT, WITHDRAWAL, REPAYMENT
+  amount          Float
+  paymentMethod   String // UPI, BANK_TRANSFER, CARDS, NET_BANKING, SYSTEM
+  referenceNumber String   @unique // e.g. TXN1029384756
+  status          String   @default("COMPLETED") // PENDING, COMPLETED, FAILED
+  description     String?
+  timestamp       DateTime @default(now())
+  previousHash    String   @default("")
+  hash            String   @default("")
+
+  organization Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  member       Member?      @relation(fields: [memberId], references: [id])
+}
