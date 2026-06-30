@@ -177,7 +177,7 @@ export default function RegisterOrgPage() {
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div className="responsive-grid-2col" style={{ gap: '16px' }}>
               <div className="form-group">
                 <label className="form-label" htmlFor="orgName">Organization Name</label>
                 <input
@@ -214,7 +214,7 @@ export default function RegisterOrgPage() {
               Founding Administrator Account
             </span>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div className="responsive-grid-2col" style={{ gap: '16px' }}>
               <div className="form-group">
                 <label className="form-label" htmlFor="adminName">Admin Full Name</label>
                 <input
@@ -244,7 +244,7 @@ export default function RegisterOrgPage() {
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div className="responsive-grid-2col" style={{ gap: '16px' }}>
               <div className="form-group">
                 <label className="form-label" htmlFor="adminEmail">Workspace Email</label>
                 <input

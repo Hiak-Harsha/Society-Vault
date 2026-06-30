@@ -239,7 +239,7 @@ export default function LoanDetailsPage({ params }: { params: Promise<{ id: stri
     .reduce((sum, r) => sum + r.principalPortion, 0);
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '32px' }}>
+    <div className="responsive-grid-split" style={{ gap: '32px' }}>
       
       {/* Left Column: Loan Info */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>

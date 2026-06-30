@@ -220,7 +220,7 @@ export default function ApplyLoanPage() {
           <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '700' }}>Loan Amount & Purpose</h3>
             
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div className="responsive-grid-2col" style={{ gap: '16px' }}>
               <div className="form-group">
                 <label className="form-label" htmlFor="loan-amount">Amount (₹)</label>
                 <input

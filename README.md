@@ -15,17 +15,17 @@ SocietyVault is a modern, secure, and fully automated financial management platf
 
 ## 📸 Screenshots
 
-![Dashboard Overview](public/dashboard_hero_preview.png)
+![Dashboard Overview](public/dashboard.png)
 *Figure 1: High-level dashboard showcasing fund pool summary, active loans, contributions, and key telemetry.*
 
-![Secure Ledger Audit](public/vault_secure_banner.png)
-*Figure 2: Security panel for auditing cryptographic ledger health and verifying hash integrity.*
+![Policies & Settings](public/settings.png)
+*Figure 2: Policies and Settings configuration panel.*
 
 ---
 
 ## 🛠️ Technology Stack
 
-* **Frontend:** React 19, Next.js 16 (App Router with Turbopack), TailwindCSS
+* **Frontend:** React 19, Next.js 16 (App Router with Turbopack), Vanilla CSS
 * **Backend:** Next.js Route Handlers
 * **Database & ORM:** Prisma ORM with SQLite database
 * **Payment Gateways:** Razorpay (with signature verification) and Stripe Elements

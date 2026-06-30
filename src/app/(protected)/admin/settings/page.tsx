@@ -175,7 +175,7 @@ export default function SettingsAdminPage() {
   }
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '32px' }}>
+    <div className="responsive-grid-split" style={{ gap: '32px' }}>
       
       {/* Left Column: Policy settings */}
       <form onSubmit={handleSavePolicy} style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
@@ -184,7 +184,7 @@ export default function SettingsAdminPage() {
         <div className="glass-card" style={{ padding: '28px' }}>
           <h3 style={{ margin: '0 0 20px 0', fontSize: '18px', fontWeight: '700' }}>Lending Rules & Policy</h3>
           
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
+          <div className="responsive-grid-2col" style={{ gap: '20px', marginBottom: '20px' }}>
             <div className="form-group">
               <label className="form-label" htmlFor="max-loan">Max Permitted Loan (₹)</label>
               <input
@@ -210,7 +210,7 @@ export default function SettingsAdminPage() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
+          <div className="responsive-grid-2col" style={{ gap: '20px', marginBottom: '20px' }}>
             <div className="form-group">
               <label className="form-label" htmlFor="max-tenure">Max Tenure (Months)</label>
               <input
@@ -236,7 +236,7 @@ export default function SettingsAdminPage() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+          <div className="responsive-grid-2col" style={{ gap: '20px' }}>
             <div className="form-group">
               <label className="form-label" htmlFor="max-loans">Max Concurrent Active Loans</label>
               <input
@@ -306,7 +306,7 @@ export default function SettingsAdminPage() {
         <div className="glass-card" style={{ padding: '28px' }}>
           <h3 style={{ margin: '0 0 20px 0', fontSize: '18px', fontWeight: '700' }}>Verification & Approval Workflows</h3>
           
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
+          <div className="responsive-grid-2col" style={{ gap: '20px', marginBottom: '20px' }}>
             <div className="form-group">
               <label className="form-label" htmlFor="min-wit">Min Witnesses Required</label>
               <input
@@ -332,7 +332,7 @@ export default function SettingsAdminPage() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
+          <div className="responsive-grid-2col" style={{ gap: '20px', marginBottom: '20px' }}>
             <div className="form-group">
               <label className="form-label">Lending Approval Mode</label>
               <select
@@ -440,9 +440,9 @@ export default function SettingsAdminPage() {
               />
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            <div className="responsive-grid-2col" style={{ gap: '12px' }}>
               <div className="form-group">
-                <label className="form-label" htmlFor="grade-level">Level Level</label>
+                <label className="form-label" htmlFor="grade-level">Grade Level</label>
                 <input
                   id="grade-level"
                   type="number"

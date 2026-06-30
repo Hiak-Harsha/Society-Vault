@@ -55,7 +55,7 @@ export default function DashboardPage() {
         </div>
         
         {/* Middle Grid skeleton */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '32px' }}>
+        <div className="responsive-grid-split" style={{ gap: '32px' }}>
           <div className="glass-card skeleton" style={{ height: '320px', borderRadius: '16px' }} />
           <div className="glass-card skeleton" style={{ height: '320px', borderRadius: '16px' }} />
         </div>
@@ -145,7 +145,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Middle Grid */}
-      <div className="dashboard-split-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '32px' }}>
+      <div className="responsive-grid-split" style={{ gap: '32px' }}>
         
         {/* Left: Fund Progress */}
         <div className="glass-card" style={{ padding: '28px' }}>
@@ -183,9 +183,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr',
+          <div className="responsive-grid-3col" style={{
             gap: '16px',
             marginTop: '32px',
             paddingTop: '24px',

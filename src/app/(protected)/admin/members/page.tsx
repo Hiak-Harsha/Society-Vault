@@ -236,7 +236,7 @@ export default function MembersAdminPage() {
       >
         <form id="member-form" onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div className="responsive-grid-2col" style={{ gap: '16px' }}>
             <div className="form-group">
               <label className="form-label" htmlFor="mem-name">Member Name</label>
               <input
@@ -266,7 +266,7 @@ export default function MembersAdminPage() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div className="responsive-grid-2col" style={{ gap: '16px' }}>
             <div className="form-group">
               <label className="form-label" htmlFor="mem-email">Email Address</label>
               <input
@@ -300,7 +300,7 @@ export default function MembersAdminPage() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div className="responsive-grid-2col" style={{ gap: '16px' }}>
             <div className="form-group">
               <label className="form-label" htmlFor="mem-rank">Rank Designated</label>
               <input

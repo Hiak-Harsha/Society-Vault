@@ -138,7 +138,7 @@ export default function LandingPage() {
           boxShadow: '0 30px 70px rgba(0,0,0,0.6), 0 0 40px rgba(16, 185, 129, 0.1)'
         }}>
           <Image 
-            src="/dashboard_hero_preview.png" 
+            src="/dashboard.png" 
             alt="SocietyVault Live Cooperative Dashboard" 
             width={820}
             height={460}

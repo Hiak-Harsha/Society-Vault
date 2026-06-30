@@ -1479,9 +1479,39 @@ p { font-size: 14px; line-height: 1.6; color: var(--text-secondary); }
   transition: width 0.6s var(--ease-out);
 }
 
-/* ── Dashboard Grid Responsive ── */
-@media (max-width: 900px) {
-  .dashboard-split-grid {
-    grid-template-columns: 1fr !important;
+/* ── Responsive Grid Layout Helper Classes ── */
+.responsive-grid-split {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+}
+@media (max-width: 1024px) {
+  .responsive-grid-split {
+    grid-template-columns: 1fr;
   }
 }
+
+.responsive-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 768px) {
+  .responsive-grid-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+.responsive-grid-3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+@media (max-width: 1024px) {
+  .responsive-grid-3col {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 640px) {
+  .responsive-grid-3col {
+    grid-template-columns: 1fr;
+  }
+}
+

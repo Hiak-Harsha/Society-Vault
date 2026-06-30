@@ -590,7 +590,7 @@ export default function RepaymentsPage() {
             </select>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div className="responsive-grid-2col" style={{ gap: '16px' }}>
             <div className="form-group">
               <label className="form-label" htmlFor="repay-amount">EMI Amount (₹)</label>
               <input

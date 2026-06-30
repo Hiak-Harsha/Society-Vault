@@ -219,7 +219,7 @@ export default function AuditAdminPage() {
               size="lg"
             >
               <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px', background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '16px' }}>
+                <div className="responsive-grid-3col" style={{ gap: '16px', background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '16px' }}>
                   <div>
                     <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Action Logged</span>
                     <p style={{ margin: '4px 0 0 0', fontWeight: '700' }}>{selectedLog.action}</p>
@@ -234,7 +234,7 @@ export default function AuditAdminPage() {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+                <div className="responsive-grid-2col" style={{ gap: '24px' }}>
                   <div>
                     <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-muted)', display: 'block', marginBottom: '8px', textTransform: 'uppercase' }}>
                       Previous state

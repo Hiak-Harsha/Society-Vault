@@ -199,7 +199,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
 
               <div className="form-group">
                 <label className="form-label">Payment Channel</label>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+                <div className="responsive-grid-3col" style={{ gap: '12px' }}>
                   {(['UPI', 'BANK_TRANSFER', 'CARDS'] as const).map((m) => (
                     <button
                       key={m}
@@ -292,7 +292,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                     />
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                  <div className="responsive-grid-2col" style={{ gap: '12px' }}>
                     <div className="form-group">
                       <label className="form-label" htmlFor="pay-exp">Expiry Date</label>
                       <input
